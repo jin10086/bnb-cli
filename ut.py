@@ -2,6 +2,7 @@ from subprocess import Popen, PIPE, STDOUT
 import subprocess
 import random, string, json
 from multiprocessing import Pool
+import time
 
 
 def runPool(f, accounts):
@@ -98,6 +99,25 @@ def transferToken(f, to, amount, password, memo="testtransfer"):
     print(transferToken)
 
 
+def issueToken(issuer, password):
+    cmd = (
+        f'bnbcli token issue --token-name "hello-world" --total-supply 100000000000000000 --symbol HWD --mintable --from {issuer} --chain-id=Binance-Chain-Nile --node=data-seed-pre-2-s1.binance.org:80 --trust-node'.split()
+    )
+    p = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+    issuetoken = p.communicate(input=bytes(password + "\n", "utf-8"))[0]
+    print(issuetoken)
+
+
+def createProposal(name, baseAssetSymbol, password):
+    t = int(time.time()) + 60 * 60 * 4
+    cmd = (
+        f'bnbcli gov submit-list-proposal --from {name} --deposit 80000000000:BNB --base-asset-symbol {baseAssetSymbol} --quote-asset-symbol BNB --init-price 100000000 --title "helloworld" --description "helloworld" --expire-time {t} --chain-id=Binance-Chain-Nile --node=data-seed-pre-2-s1.binance.org:80 --json'.split()
+    )
+    p = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+    issuetoken = p.communicate(input=bytes(password + "\n", "utf-8"))[0]
+    print(issuetoken)
+
+
 def summaryBNB(name, password):
     transferToken(
         name, "tbnb1c7sg5wwqsvxd52tlmmhyj3dxvc6njl5vvdterk", 19999875000, password
@@ -105,15 +125,19 @@ def summaryBNB(name, password):
 
 
 if __name__ == "__main__":
-    NameWithAddress = getNameWithAddress()
-    password = ""
-    for i in getBalance():
-        if i:
-            address = i["value"]["base"]["address"]
-            bnbAmount = 0
-            if i["value"]["base"]["coins"]:
-                for coin in i["value"]["base"]["coins"]:
-                    if coin["denom"] == "BNB":
-                        bnbAmount = coin["amount"]
-                if bnbAmount == "20000000000":
-                    summaryBNB(NameWithAddress[address], password)
+    password = "Yijia7dengyu8"
+    # issueToken("testkey", password)
+    createProposal("testkey", "HWD-27B", password)
+    # createkey(password, 100)
+    # NameWithAddress = getNameWithAddress()
+    # password = ""
+    # for i in getBalance():
+    #     if i:
+    #         address = i["value"]["base"]["address"]
+    #         bnbAmount = 0
+    #         if i["value"]["base"]["coins"]:
+    #             for coin in i["value"]["base"]["coins"]:
+    #                 if coin["denom"] == "BNB":
+    #                     bnbAmount = coin["amount"]
+    #             if bnbAmount == "20000000000":
+    #                 summaryBNB(NameWithAddress[address], password)
