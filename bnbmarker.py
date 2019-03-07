@@ -71,9 +71,9 @@ def run():
             "https://testnet-dex.binance.org/api/v1/depth?symbol=" + symbol
         )  # 获取TOKEN挂单
         p = r.json()
-        if targetPrice < 80:  # 小于80则一定上涨
+        if targetPrice < 800:  # 小于800则一定上涨
             side = 1
-        elif targetPrice > 200:  # 大于200则一定下跌
+        elif targetPrice > 1200:  # 大于1200则一定下跌
             side = 2
         log.info(f"刷单方向为{side}")
         if side == 1:
