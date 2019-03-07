@@ -63,7 +63,7 @@ def init():
 
 def run():
     log.info("开始刷单.")
-    targetPrice = 100  # 设定初始价格
+    targetPrice = 800  # 设定初始价格
     log.info(f"初始价格为{targetPrice}")
     while True:
         side = int(2 * random.random()) + 1  # 随机买卖方向
