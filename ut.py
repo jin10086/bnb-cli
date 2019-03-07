@@ -109,7 +109,7 @@ def issueToken(issuer, password):
 
 
 def createProposal(name, baseAssetSymbol, password):
-    t = int(time.time()) + 60 * 60 * 4
+    t = int(time.time()) + 60 * 60 * 10
     cmd = [
         "bnbcli",
         "gov",
@@ -129,7 +129,7 @@ def createProposal(name, baseAssetSymbol, password):
         "--description",
         f"list {baseAssetSymbol}/BNB",
         "--expire-time",
-        t,
+        f"{t}",
         "--chain-id=Binance-Chain-Nile",
         "--node=data-seed-pre-2-s1.binance.org:80",
     ]
