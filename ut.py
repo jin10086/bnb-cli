@@ -149,7 +149,7 @@ def depositProposal(name, proposalid, amount, password):
 
 def maker(f, symbol, side, price, qty, password="Yijia7dengyu8"):
     cmd = (
-        f"bnbcli dex order --symbol {symbol} --side {side} --price {int(price*100000)*1000} --qty {int(qty*1000)*100000} --tif gte --from {f} --chain-id=Binance-Chain-Nile --node=data-seed-pre-2-s1.binance.org:80 --trust-node"
+        f"bnbcli dex order --symbol {symbol} --side {side} --price {int(price*100000)*1000} --qty {int(qty*1000)*100000} --tif gte --from {f} --chain-id=Binance-Chain-Nile --node=data-seed-pre-0-s1.binance.org:80 --trust-node"
     ).split()
     p = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=STDOUT)
     marketmaking = p.communicate(input=bytes(password + "\n", "utf-8"))[0]
