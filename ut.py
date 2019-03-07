@@ -111,14 +111,14 @@ def issueToken(issuer, password):
 def createProposal(name, baseAssetSymbol, password):
     t = int(time.time()) + 60 * 60 * 4
     cmd = (
-        f'bnbcli gov submit-list-proposal --from {name} --deposit 80000000000:BNB --base-asset-symbol {baseAssetSymbol} --quote-asset-symbol BNB --init-price 100000000 --title "helloworld" --description "helloworld" --expire-time {t} --chain-id=Binance-Chain-Nile --node=data-seed-pre-2-s1.binance.org:80 --json'.split()
+        f'bnbcli gov submit-list-proposal --from {name} --deposit 80000000000:BNB --base-asset-symbol {baseAssetSymbol} --quote-asset-symbol BNB --init-price 100000000 --title "list BNB/{baseAssetSymbol}" --description "list BNB/{baseAssetSymbol}" --expire-time {t} --chain-id=Binance-Chain-Nile --node=data-seed-pre-2-s1.binance.org:80 --json'.split()
     )
     p = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=STDOUT)
     issuetoken = p.communicate(input=bytes(password + "\n", "utf-8"))[0]
     print(issuetoken)
 
 
-def maker(f, symbol, side, price, qty, password="yourpassword"):
+def maker(f, symbol, side, price, qty, password="Yijia7dengyu8"):
     cmd = (
         f"bnbcli dex order --symbol {symbol} --side {side} --price {int(price*100000)*1000} --qty {int(qty*1000)*100000} --tif gte --from {f} --chain-id=Binance-Chain-Nile --node=data-seed-pre-2-s1.binance.org:80 --trust-node"
     ).split()
