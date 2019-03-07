@@ -118,6 +118,15 @@ def createProposal(name, baseAssetSymbol, password):
     print(issuetoken)
 
 
+def maker(f, symbol, side, price, qty, password="yourpassword"):
+    cmd = (
+        f"bnbcli dex order --symbol {symbol} --side {side} --price {int(price*100000)*1000} --qty {int(qty*1000)*100000} --tif gte --from {f} --chain-id=Binance-Chain-Nile --node=data-seed-pre-2-s1.binance.org:80 --trust-node"
+    ).split()
+    p = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+    marketmaking = p.communicate(input=bytes(password + "\n", "utf-8"))[0]
+    print(marketmaking)
+
+
 def summaryBNB(name, password):
     transferToken(
         name, "tbnb1c7sg5wwqsvxd52tlmmhyj3dxvc6njl5vvdterk", 19999875000, password
