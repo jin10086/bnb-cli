@@ -153,7 +153,12 @@ def maker(f, symbol, side, price, qty, password="Yijia7dengyu8"):
     ).split()
     p = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=STDOUT)
     marketmaking = p.communicate(input=bytes(password + "\n", "utf-8"))[0]
-    print(marketmaking)
+    if b"ERROR" in marketmaking:
+        print(marketmaking)
+        print("下单失败，3秒后重试...")
+        time.sleep(3)
+        return maker(f, symbol, side, price, qty, password="Yijia7dengyu8")
+    return marketmaking
 
 
 def summaryBNB(name, password):
