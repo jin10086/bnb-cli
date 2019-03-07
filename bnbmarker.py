@@ -6,7 +6,9 @@ import time
 import logging
 import os
 
-symbol = "HWD-0A2_BNB"
+symbol = "PRA.B-31A_BNB"
+# symbol = "HWD-0A2_BNB"
+# symbol = "BIN-986_BNB"
 account = "testkey"
 
 s = requests.Session()
@@ -32,6 +34,19 @@ def loggingSetting(name):
 
 
 log = loggingSetting("bnbMarker")
+
+
+def buyOtherToken():
+    maker(account, "ANN-457_BNB", 1, 1, 100)
+    maker(account, "BNN-411_BNB", 1, 1, 100)
+    maker(account, "CNN-210_BNB", 1, 1, 100)
+    maker(account, "UKT-710_BNB", 1, 1, 100)
+    maker(account, "E0C-EF8_BNB", 1, 1, 100)
+    maker(account, "FLC-FB2_BNB", 1, 1, 100)
+    maker(account, "SLC-6D1_BNB", 1, 1, 100)
+    maker(account, "NMSL-19D_BNB", 1, 1, 100)
+    maker(account, "NARN-278_BNB", 1, 1, 100)
+    maker(account, "OEN-FD1_BNB", 1, 1, 100)
 
 
 def init():
