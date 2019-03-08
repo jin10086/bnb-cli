@@ -84,7 +84,7 @@ def run():
                     qty += float(j)  # 集合所有低于目标价的深度
 
             log.info(f"下单价格为 {targetPrice}")
-            if qty == 0:  # 如果可吃单量为0，自己下一单对敲
+            if qty < 0.001:  # 如果可吃单量小于0.001，自己下一单对敲
                 log.info("可吃单为0,自己下单")
                 t = maker(account, symbol, 2, targetPrice, 0.001)
                 log.info(t)
@@ -99,7 +99,7 @@ def run():
                 if float(i) > targetPrice:
                     qty += float(j)
             log.info(f"下单价格为 {targetPrice}")
-            if qty == 0:
+            if qty < 0.001:
                 log.info("可吃单为0,自己下单")
                 t = maker(account, symbol, 1, targetPrice, 0.001)
                 log.info(t)
