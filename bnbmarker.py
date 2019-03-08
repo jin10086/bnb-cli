@@ -63,7 +63,7 @@ def init():
 
 def run():
     log.info("开始刷单.")
-    targetPrice = 800  # 设定初始价格
+    targetPrice = 4.9  # 设定初始价格
     log.info(f"初始价格为{targetPrice}")
     while True:
         side = int(2 * random.random()) + 1  # 随机买卖方向
@@ -71,10 +71,12 @@ def run():
             "https://testnet-dex.binance.org/api/v1/depth?symbol=" + symbol
         )  # 获取TOKEN挂单
         p = r.json()
-        if targetPrice <= 800:  # 小于800则一定上涨
-            side = 1
-        elif targetPrice > 1200:  # 大于1200则一定下跌
+        if targetPrice >= 10:  # 大于1200则一定下跌
             side = 2
+            targetPrice = 14.9
+        if targetPrice < 5:
+            side = 1
+            targetPrice = 4.9
         log.info(f"刷单方向为{side}")
         if side == 1:
             targetPrice += 10
