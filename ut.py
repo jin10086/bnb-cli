@@ -2,7 +2,14 @@ from subprocess import Popen, PIPE, STDOUT
 import subprocess
 import random, string, json
 from multiprocessing import Pool
-import time
+import time, random
+
+nodes = [
+    "http://seed-pre-s1.binance.org:80",
+    "http://data-seed-pre-0-s1.binance.org/",
+    "http://data-seed-pre-1-s1.binance.org:80",
+    "http://data-seed-pre-2-s1.binance.org:80",
+]
 
 
 def runPool(f, accounts):
@@ -147,9 +154,17 @@ def depositProposal(name, proposalid, amount, password):
     print(e)
 
 
-def maker(f, symbol, side, price, qty, password="Yijia7dengyu8"):
+def maker(
+    f,
+    symbol,
+    side,
+    price,
+    qty,
+    password="Yijia7dengyu8",
+    node="data-seed-pre-0-s1.binance.org:80",
+):
     cmd = (
-        f"bnbcli dex order --symbol {symbol} --side {side} --price {int(price*100000)*1000} --qty {int(qty*1000)*100000} --tif gte --from {f} --chain-id=Binance-Chain-Nile --node=data-seed-pre-0-s1.binance.org:80 --trust-node"
+        f"bnbcli dex order --symbol {symbol} --side {side} --price {int(price*100000)*1000} --qty {int(qty*1000)*100000} --tif gte --from {f} --chain-id=Binance-Chain-Nile --node={node} --trust-node"
     ).split()
     p = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=STDOUT)
     marketmaking = p.communicate(input=bytes(password + "\n", "utf-8"))[0]
@@ -157,7 +172,8 @@ def maker(f, symbol, side, price, qty, password="Yijia7dengyu8"):
         print(marketmaking)
         print("下单失败，3秒后重试...")
         time.sleep(3)
-        return maker(f, symbol, side, price, qty, password="Yijia7dengyu8")
+        node = random.choice(nodes)
+        return maker(f, symbol, side, price, qty, password="Yijia7dengyu8", node=node)
     return marketmaking
 
 
@@ -170,7 +186,7 @@ def summaryBNB(name, password):
 if __name__ == "__main__":
     password = "Yijia7dengyu8"
     # issueToken("testkey", password)
-    createProposal("testkey", "HWD-27B", password)
+    # createProposal("testkey", "HWD-27B", password)
     # createkey(password, 100)
     # NameWithAddress = getNameWithAddress()
     # password = ""
